@@ -10,7 +10,8 @@ using static System.Net.WebRequestMethods;
 namespace SipayApi.Controllers
 {
 
-    [Route("api/[controller]")]
+    
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class PersonController : ControllerBase  //class bir class'ı extend almış 
     { // PersonController ControllerBase'i inherit etmiş.(miras almış). Otomatik olarak generate edilmiştir.
@@ -23,10 +24,10 @@ namespace SipayApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Person person)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) // ModelState.IsValid kontrolü ile bool bir değer dönmektedir , true ise hatasız false ise model e uygun olmayan değerlerin olduğu belirtilir.
             {
                 var messages = ModelState.ToList();
-                return BadRequest("Post operation failed");
+                return BadRequest(messages);
             }
             return Ok(person);
         }
